@@ -1,0 +1,33 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Platform</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Blog Platform</h1>
+        <h2>Blog Posts:</h2>
+        <ul>
+            {% for post in blog_posts %}
+                {% if not post.deleted %}
+                <li>
+                    <div class="post-info">
+                        <h3><a href="{{ url_for('read_post', post_id=post.id) }}">{{ post.title }}</a></h3>
+                        {% if post.tag_names %}
+                            <p>Tags: {% for tag_name in post.tag_names.split(',') %}{{ tag_name.strip() }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                        {% endif %}
+                        <a class="remove-button" href="{{ url_for('remove_post', post_id=post.id) }}">Remove</a>
+                        <a class="edit-button" href="{{ url_for('edit_post', post_id=post.id) }}">Edit</a>
+                    </div>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('create_post') }}">Create a new post</a><br>
+        <a href="{{ url_for('tags_list') }}">View All Tags</a>
+    </div>
+</body>
+</html>
