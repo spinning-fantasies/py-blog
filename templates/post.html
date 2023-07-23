@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Simple Blog</title>
+    <title>{{ post.title }} - My Simple Blog</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-4">
-        <h1>My Simple Blog</h1>
+        <h1>{{ post.title }}</h1>
         <hr>
-        <a href="/write_post" class="btn btn-primary mb-3">Write a New Post</a>
-        {% for post in posts %}
-            <div class="card mb-4">
+        {% if post %}
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ post.title }}</h5>
+                    <!-- Render the Markdown content -->
                     {{ post.content|markdown }}
                     <p class="card-text"><small class="text-muted">{{ post.date_posted }}</small></p>
                 </div>
             </div>
-        {% endfor %}
+        {% else %}
+            <p>Blog post not found!</p>
+        {% endif %}
     </div>
 </body>
 </html>
